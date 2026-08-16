@@ -33,6 +33,13 @@ import {
   createHospitalBed,
 } from "./enviroment/furnitureLoader.js";
 
+import {
+  createWardC,
+} from "./enviroment/wardC.js";
+
+import {
+  createWardCFurniture,
+} from "./enviroment/wardCFurniture.js";
 
 // ------------------------------------
 // PLAYER
@@ -40,6 +47,7 @@ import {
 
 import { Player } from "./player/Player.js";
 import { PlayerController } from "./player/PlayerController.js";
+import { Flashlight } from "./player/Flashlight.js";
 
 // ------------------------------------
 // INTERACTION
@@ -75,6 +83,8 @@ import {
   createHospitalKey,
 } from "./items/key.js";
 
+
+
 // ------------------------------------
 // UI
 // ------------------------------------
@@ -101,6 +111,8 @@ async function init() {
   const camera =
     createCamera();
 
+  scene.add(camera);
+
   const renderer =
     createRenderer();
 
@@ -120,6 +132,11 @@ async function init() {
   const lights =
     createLighting(scene);
 
+  const wardCColliders =
+    createWardC(scene);
+
+  const wardCFurnitureColliders =
+    createWardCFurniture(scene);
 
   // ------------------------------------
   // PLAYER
@@ -127,6 +144,33 @@ async function init() {
 
   const player =
     new Player(camera);
+
+  player.position.set(
+    0,
+    2,
+    -10
+  );
+
+  player.updateCameraPosition();
+
+  const flashlight =
+    new Flashlight(camera);
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (
+        event.code === "KeyF" &&
+        !event.repeat
+      ) {
+
+        flashlight.toggle();
+
+      }
+
+    }
+  );
 
 
   // ------------------------------------
@@ -237,6 +281,8 @@ async function init() {
   const colliders = [
     ...roomColliders,
     ...furnitureColliders,
+    ...wardCColliders,
+    ...wardCFurnitureColliders,
     hospitalBed.collider,
     wardCDoor.collider,
   ];

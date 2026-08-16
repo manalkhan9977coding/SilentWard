@@ -234,6 +234,7 @@ export class PlayerController {
 
       this.player.updateCameraPosition();
     }
+
   }
 
   checkCollision(position) {
@@ -253,21 +254,41 @@ export class PlayerController {
       );
 
 
-    for (
-      const collider
-      of this.colliders
-    ) {
+    for (const collider of this.colliders) {
 
       const colliderBox =
         new THREE.Box3().setFromObject(
           collider
         );
 
+
       if (
         playerBox.intersectsBox(
           colliderBox
         )
       ) {
+
+        console.log(
+          "🚨 COLLISION WITH:",
+          collider.name || "Unnamed collider"
+        );
+
+        console.log(
+          "Collider position:",
+          collider.position
+        );
+
+        console.log(
+          "Collider box:",
+          colliderBox.min,
+          colliderBox.max
+        );
+
+        console.log(
+          "Player position:",
+          position
+        );
+
         return true;
       }
     }
