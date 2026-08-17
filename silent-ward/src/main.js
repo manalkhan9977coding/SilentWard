@@ -63,6 +63,10 @@ import {
 // ------------------------------------
 // ITEMS
 // ------------------------------------
+
+import {
+  createWardCDoor,
+} from "./enviroment/wardDoor.js";
 import {
   createMysteriousNote,
 } from "./items/mysteriousNotes.js";
@@ -171,6 +175,16 @@ async function init() {
     interactionPrompt
   );
 
+  // ------------------------------------
+  // WARD C DOOR
+  // ------------------------------------
+
+  const wardCDoor =
+    createWardCDoor(
+      scene,
+      interactionManager
+    );
+
 
   // ------------------------------------
   // BED INTERACTION
@@ -196,17 +210,18 @@ async function init() {
       interactionManager,
     );
 
-    createCabinetInteraction(
-      scene,
-      inventory,
-      interactionManager,
-      mysteriousNote
-    );
+  createCabinetInteraction(
+    scene,
+    inventory,
+    interactionManager,
+    mysteriousNote
+  );
 
 
   // ------------------------------------
   // ITEMS
   // ------------------------------------
+
 
   createHospitalKey(
     scene,
@@ -220,13 +235,10 @@ async function init() {
   // ------------------------------------
 
   const colliders = [
-
     ...roomColliders,
-
     ...furnitureColliders,
-
     hospitalBed.collider,
-
+    wardCDoor.collider,
   ];
 
 

@@ -157,7 +157,7 @@ export function createMysteriousNote(
                 // --------------------------------
 
                 showMessage(
-                    'The note reads: "Ward C. Do not let them hear you."'
+                    'The note reads: "Ward C. The four numbers are written where the patients sleep. 17... 34..."'
                 );
 
             },
