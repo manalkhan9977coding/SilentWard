@@ -16,6 +16,9 @@ import { createRenderer } from "./core/renderer.js";
 import { createRoom } from "./enviroment/room.js";
 import { createFurniture } from "./enviroment/furniture.js";
 import { createProps } from "./enviroment/props.js";
+import {
+  createCabinetInteraction,
+} from "./enviroment/cabinet.js";
 
 import {
   createLighting,
@@ -29,6 +32,7 @@ import {
 import {
   createHospitalBed,
 } from "./enviroment/furnitureLoader.js";
+
 
 // ------------------------------------
 // PLAYER
@@ -59,6 +63,9 @@ import {
 // ------------------------------------
 // ITEMS
 // ------------------------------------
+import {
+  createMysteriousNote,
+} from "./items/mysteriousNotes.js";
 
 import {
   createHospitalKey,
@@ -177,6 +184,24 @@ async function init() {
   interactionManager.addInteractable(
     bedInteraction
   );
+
+  // ------------------------------------
+  // MYSTERIOUS NOTE
+  // ------------------------------------
+
+  const mysteriousNote =
+    createMysteriousNote(
+      scene,
+      inventory,
+      interactionManager,
+    );
+
+    createCabinetInteraction(
+      scene,
+      inventory,
+      interactionManager,
+      mysteriousNote
+    );
 
 
   // ------------------------------------

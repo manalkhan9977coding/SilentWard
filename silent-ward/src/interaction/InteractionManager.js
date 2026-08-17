@@ -25,7 +25,7 @@ export class InteractionManager {
 
         this.currentInteractable = null;
 
-        this.maxDistance = 3;
+        this.maxDistance = 5;
 
         this.prompt = null;
 

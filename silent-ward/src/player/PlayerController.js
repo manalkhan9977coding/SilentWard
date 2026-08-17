@@ -16,7 +16,7 @@ export class PlayerController {
       );
 
     this.moveSpeed =
-    PLAYER_CONFIG.moveSpeed;
+      PLAYER_CONFIG.moveSpeed;
 
     this.keys = {
       forward: false,
@@ -94,37 +94,118 @@ export class PlayerController {
       return;
     }
 
-    this.direction.set(0, 0, 0);
+    // ------------------------------------
+    // CAMERA DIRECTION
+    // ------------------------------------
 
+    const forward =
+      new THREE.Vector3();
+
+    this.camera.getWorldDirection(
+      forward
+    );
+
+    // We only want horizontal movement.
+    // Ignore looking up/down.
+    forward.y = 0;
+
+    forward.normalize();
+
+
+    // ------------------------------------
+    // RIGHT DIRECTION
+    // ------------------------------------
+
+    const right =
+      new THREE.Vector3();
+
+    right.crossVectors(
+      forward,
+      new THREE.Vector3(0, 1, 0)
+    );
+
+    right.normalize();
+
+
+    // ------------------------------------
+    // MOVEMENT
+    // ------------------------------------
+
+    this.direction.set(
+      0,
+      0,
+      0
+    );
+
+
+    // W = camera forward
     if (this.keys.forward) {
-      this.direction.z -= 1;
+
+      this.direction.add(
+        forward
+      );
+
     }
 
+
+    // S = camera backward
     if (this.keys.backward) {
-      this.direction.z += 1;
+
+      this.direction.sub(
+        forward
+      );
+
     }
 
-    if (this.keys.left) {
-      this.direction.x -= 1;
-    }
 
+    // D = camera right
     if (this.keys.right) {
-      this.direction.x += 1;
+
+      this.direction.add(
+        right
+      );
+
     }
 
 
-    if (this.direction.lengthSq() === 0) {
+    // A = camera left
+    if (this.keys.left) {
+
+      this.direction.sub(
+        right
+      );
+
+    }
+
+
+    // ------------------------------------
+    // NO MOVEMENT
+    // ------------------------------------
+
+    if (
+      this.direction.lengthSq() === 0
+    ) {
       return;
     }
 
+
+    // ------------------------------------
+    // NORMALIZE
+    // ------------------------------------
+
     this.direction.normalize();
 
+
+    // ------------------------------------
+    // APPLY SPEED
+    // ------------------------------------
 
     const movement =
       this.direction
         .clone()
         .multiplyScalar(
-          this.moveSpeed * deltaTime
+          this.moveSpeed *
+          deltaTime
         );
 
 

@@ -5,7 +5,7 @@ export function createLighting(scene) {
   const ambientLight =
     new THREE.AmbientLight(
       0x9aa0a3,
-      0.35
+      1
     );
 
   scene.add(ambientLight);
